@@ -12,15 +12,15 @@ NUTRITIONIX_APP_KEY = "6d54de36f4faa357b0b7fc9903144eb1"
 ORS_API_KEY = "5b3ce3597851110001cf62488cd4fbecec9c49e9a0bc554fc2f98516"
 MISTRAL_URL = "https://api.mistral.ai/v1/chat/completions"
 
-# 🔄 Initialize session state
-if "ai_response" not in st.session_state:
-    st.session_state.ai_response = ""
-if "healthcare_results" not in st.session_state:
-    st.session_state.healthcare_results = []
-if "recipe_response" not in st.session_state:
-    st.session_state.recipe_response = ""
-if "nutrition_response" not in st.session_state:
-    st.session_state.nutrition_response = ""
+# 🔄 **Ensure all session state variables are initialized**
+for key, default_value in {
+    "ai_response": "",
+    "healthcare_results": [],
+    "recipe_response": "",
+    "nutrition_response": "",
+}.items():
+    if key not in st.session_state:
+        st.session_state[key] = default_value
 
 # 📍 **Find Nearby Healthcare Facilities**
 def find_healthcare_facilities(location, query="general hospital"):
@@ -30,11 +30,8 @@ def find_healthcare_facilities(location, query="general hospital"):
     try:
         response = requests.get(google_url)
         data = response.json()
-        results = data.get("items", [])
-
-        return results[:3] if results else []
-    
-    except Exception:
+        return data.get("items", [])[:3] if "items" in data else []
+    except:
         return []
 
 # 📌 **Generate Google Maps Link**
@@ -48,8 +45,7 @@ def get_location_coordinates(place_name):
     try:
         response = requests.get(url)
         data = response.json()
-        coordinates = data.get("features", [])[0]["geometry"]["coordinates"]
-        return coordinates[::-1]  # Reverse order (lat, lon)
+        return data.get("features", [])[0]["geometry"]["coordinates"][::-1]  # Reverse order (lat, lon)
     except:
         return None
 
@@ -72,8 +68,7 @@ def generate_ai_response(prompt):
         response = requests.post(MISTRAL_URL, json=body, headers=headers)
         result = response.json()
         return result["choices"][0]["message"]["content"]
-    
-    except Exception:
+    except:
         return "Unable to process your request at the moment."
 
 # 🍽 **Healthy Recipe Suggestions**
@@ -84,13 +79,10 @@ def get_healthy_recipes(ingredients):
 # 🥗 **Smart Nutrition & Health Guide**
 def get_nutrition_info(food_item):
     prompt = f"Classify '{food_item}' as either 'food' or 'condition'. Reply with ONLY 'food' or 'condition'."
-    category = generate_ai_response(prompt).strip().lower()
-
-    category = category.split()[0] if category else ""
+    category = generate_ai_response(prompt).strip().lower().split()[0] if generate_ai_response(prompt) else ""
 
     if category == "condition":
-        advice_prompt = f"What are the best 5 foods for {food_item}? Also, list 5 foods to avoid."
-        return generate_ai_response(advice_prompt)
+        return generate_ai_response(f"What are the best 5 foods for {food_item}? Also, list 5 foods to avoid.")
 
     elif category == "food":
         nutritionix_url = "https://trackapi.nutritionix.com/v2/natural/nutrients"
@@ -101,8 +93,7 @@ def get_nutrition_info(food_item):
             response = requests.post(nutritionix_url, json=body, headers=headers)
             data = response.json()
             return data["foods"][0] if "foods" in data else "No nutritional data found."
-        
-        except Exception:
+        except:
             return "Error fetching nutrition data."
 
     else:
@@ -115,11 +106,12 @@ def healthcare_page():
     # 🧠 **AI-Powered Healthcare Assistant**
     st.header("🧠 AI-Powered Healthcare Assistant")
     user_query = st.text_input("Ask a health-related question:", key="ai_input")
+    
     if st.button("Get Advice"):
         if user_query:
             st.session_state.ai_response = generate_ai_response(user_query)
     
-    if st.session_state.ai_response:
+    if st.session_state.get("ai_response"):
         st.write(f"🤖 *AI Response:*\n{st.session_state.ai_response}")
 
     # 📍 **Find Nearby Healthcare Facilities**
@@ -131,7 +123,7 @@ def healthcare_page():
         query = special_need if special_need else "general hospital"
         st.session_state.healthcare_results = find_healthcare_facilities(location, query)
 
-    if st.session_state.healthcare_results:
+    if st.session_state.get("healthcare_results"):
         for item in st.session_state.healthcare_results:
             title = item.get('title', 'No Title')
             link = generate_google_maps_link(title)
@@ -154,7 +146,7 @@ def healthcare_page():
     if st.button("Get Recipes"):
         st.session_state.recipe_response = get_healthy_recipes(ingredients)
 
-    if st.session_state.recipe_response:
+    if st.session_state.get("recipe_response"):
         st.write(f"🍛 *AI-Generated Recipe:*\n{st.session_state.recipe_response}")
 
     # 🥗 **Personalized Nutrition Information**
@@ -164,7 +156,7 @@ def healthcare_page():
     if st.button("Get Nutrition Info"):
         st.session_state.nutrition_response = get_nutrition_info(food_item)
 
-    if st.session_state.nutrition_response:
+    if st.session_state.get("nutrition_response"):
         if isinstance(st.session_state.nutrition_response, dict):
             nutrition_data = st.session_state.nutrition_response
             st.write(f"🍏 *Food:* {nutrition_data.get('food_name', 'Unknown')}")
