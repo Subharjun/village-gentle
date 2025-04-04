@@ -4,13 +4,13 @@ import folium
 from streamlit_folium import folium_static
 
 # ✅ API Keys (Directly included for development)
-MISTRAL_API_KEY = "Uvn5XeYrywt3lrGLAjRqxnNPMC4pSz6L"
-GOOGLE_API_KEY = "AIzaSyAu-1_wFQUy-LqWIN8gGBh70VbSHRvuD5k"
-GOOGLE_CSE_ID = "071a9925363134f29"
-NUTRITIONIX_APP_ID = "10620010"
-NUTRITIONIX_APP_KEY = "6d54de36f4faa357b0b7fc9903144eb1"
-ORS_API_KEY = "5b3ce3597851110001cf62488cd4fbecec9c49e9a0bc554fc2f98516"
-MISTRAL_URL = "https://api.mistral.ai/v1/chat/completions"
+MISTRAL_API_KEY = "xxxxxxxxxxxxxxxxxxx"
+GOOGLE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+GOOGLE_CSE_ID = "xxxxxxxxxxxxxxxxxxxxx"
+NUTRITIONIX_APP_ID = "xxxxxxxxxxxxxxxxx"
+NUTRITIONIX_APP_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ORS_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+MISTRAL_URL = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # 🔄 **Ensure all session state variables are initialized**
 for key, default_value in {
