@@ -3,8 +3,8 @@ import requests
 from deep_translator import GoogleTranslator
 
 # Mistral AI Config
-MISTRAL_API_KEY = "Uvn5XeYrywt3lrGLAjRqxnNPMC4pSz6L"
-MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
+MISTRAL_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+MISTRAL_API_URL = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # Function to get response from Mistral AI
 def get_mistral_response(prompt, language="en"):
