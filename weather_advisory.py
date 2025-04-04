@@ -5,8 +5,8 @@ import plotly.express as px
 from deep_translator import GoogleTranslator
 
 # ✅ API KEYS
-MISTRAL_API_KEY = "Uvn5XeYrywt3lrGLAjRqxnNPMC4pSz6L"
-WINDY_API_KEY = "FPixHOM33yKJv2qaGwFhmctYnBABxO5P"
+MISTRAL_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxx"
+WINDY_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # ✅ Manual Location Input
 def get_user_location():
