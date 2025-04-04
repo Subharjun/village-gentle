@@ -2,10 +2,10 @@ import streamlit as st
 import requests
 
 # ✅ API Keys (Directly included for development)
-YOUTUBE_API_KEY = "AIzaSyCqEsmUIRhQbBTcEhJrA4eHbnldwbHS2Hk"
-MISTRAL_API_KEY = "Uvn5XeYrywt3lrGLAjRqxnNPMC4pSz6L"
-GOOGLE_API_KEY = "AIzaSyAu-1_wFQUy-LqWIN8gGBh70VbSHRvuD5k"
-GOOGLE_CSE_ID = "071a9925363134f29"
+YOUTUBE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+MISTRAL_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+GOOGLE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+GOOGLE_CSE_ID = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # ✅ Ensure previous results persist across interactions
 if "skill_videos" not in st.session_state:
